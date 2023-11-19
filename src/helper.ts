@@ -266,7 +266,15 @@ export const cards: CardType[] = [
     color: 'blue',
   },
 ];
-
+export enum GameState {
+  NotStarted,
+  FirstCardsDealt,
+  PlayerHits,
+  PlayerStands,
+  PlayerWin,
+  DealerWin,
+  Draw,
+}
 export const shuffleDeck = (deck: CardType[]): CardType[] => {
   const shuffledDeck = [...deck];
   for (let i = shuffledDeck.length - 1; i > 0; i--) {
@@ -275,3 +283,27 @@ export const shuffleDeck = (deck: CardType[]): CardType[] => {
   }
   return shuffledDeck;
 };
+
+export function randomIntFromInterval(min: number, max: number): number {
+  // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+export function getCardValue(value: number | 'J' | 'Q' | 'K' | 'A'): number {
+  let val = 0;
+  if (value === 'J' || value === 'Q' || value === 'K' || value === 'A') {
+    val = 10;
+  } else if (typeof value === 'number') {
+    val = value;
+  }
+  return val;
+}
+
+export function getScore(cards: CardType[]): number {
+  var sum = cards.reduce((acc, card) => acc + getCardValue(card.value), 0);
+  return sum;
+}
+
+export function delay(time: number) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}

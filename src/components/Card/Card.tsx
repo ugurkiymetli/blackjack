@@ -10,11 +10,12 @@ import {
 
 export interface ICardProps {
   card: CardType;
+  hidden: boolean;
 }
 
 export default function Card(props: ICardProps) {
-  const { color, value, suit } = props.card;
-
+  const { hidden, card } = props;
+  const { color, value, suit } = card;
   function getSuitIcon(): React.ReactNode {
     if (suit === 'clubs') return <BsFillSuitClubFill />;
     if (suit === 'hearts') return <BsFillSuitHeartFill />;
@@ -25,9 +26,9 @@ export default function Card(props: ICardProps) {
   return (
     <div className="card">
       <div className={`card-${color}`}>
-        <span className="card-value">{value}</span>
+        <span className="card-value">{hidden ? '?' : value}</span>
         <br />
-        <span className="card-suit">{getSuitIcon()}</span>
+        <span className="card-suit">{hidden ? null : getSuitIcon()}</span>
       </div>
     </div>
   );
